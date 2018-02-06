@@ -10,12 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * @author hongliuliao
- *
- * createTime:2012-11-23 上午11:49:53
- */
-public class ThriftType implements Cloneable {
+public class FieldType implements Cloneable {
 	
 	public static final int BASIC_TYPE = 1;
 	public static final int COLLECTION_TYPE = 1 << 1;
@@ -23,19 +18,19 @@ public class ThriftType implements Cloneable {
 	public static final int VOID_TYPE = 1 << 3;
 	public static final int ENUM_TYPE = 1 << 4;
 	
-	public static final ThriftType BOOL = new ThriftType("bool", BASIC_TYPE, "boolean", "Boolean");
-	public static final ThriftType BYTE = new ThriftType("byte", BASIC_TYPE, "byte", "Byte");
-	public static final ThriftType I16 = new ThriftType("i16", BASIC_TYPE, "short", "Short"); 
-	public static final ThriftType I32 = new ThriftType("i32", BASIC_TYPE, "int", "Integer"); 
-	public static final ThriftType I64 = new ThriftType("i64", BASIC_TYPE, "long", "Long");
-	public static final ThriftType DOUBLE = new ThriftType("double", BASIC_TYPE, "double", "Double");
-	public static final ThriftType STRING = new ThriftType("string", BASIC_TYPE, "String", "String"); 
-	public static final ThriftType LIST = new ThriftType("list", COLLECTION_TYPE, "List");  
-	public static final ThriftType SET = new ThriftType("set", COLLECTION_TYPE, "Set");  
-	public static final ThriftType MAP = new ThriftType("map", COLLECTION_TYPE, "Map"); 
-	public static final ThriftType ENUM = new ThriftType("enum", ENUM_TYPE, "enum", "Enum"); 
-	public static final ThriftType VOID = new ThriftType("void", VOID_TYPE, "void", "Void"); 
-	public static final ThriftType STRUCT = new ThriftType("struct", STRUCT_TYPE, "class", "Class");
+	public static final FieldType BOOL = new FieldType("bool", BASIC_TYPE, "boolean", "Boolean");
+	public static final FieldType BYTE = new FieldType("byte", BASIC_TYPE, "byte", "Byte");
+	public static final FieldType I16 = new FieldType("i16", BASIC_TYPE, "short", "Short");
+	public static final FieldType I32 = new FieldType("i32", BASIC_TYPE, "int", "Integer");
+	public static final FieldType I64 = new FieldType("i64", BASIC_TYPE, "long", "Long");
+	public static final FieldType DOUBLE = new FieldType("double", BASIC_TYPE, "double", "Double");
+	public static final FieldType STRING = new FieldType("string", BASIC_TYPE, "String", "String");
+	public static final FieldType LIST = new FieldType("list", COLLECTION_TYPE, "List");
+	public static final FieldType SET = new FieldType("set", COLLECTION_TYPE, "Set");
+	public static final FieldType MAP = new FieldType("map", COLLECTION_TYPE, "Map");
+	public static final FieldType ENUM = new FieldType("enum", ENUM_TYPE, "enum", "Enum");
+	public static final FieldType VOID = new FieldType("void", VOID_TYPE, "void", "Void");
+	public static final FieldType STRUCT = new FieldType("struct", STRUCT_TYPE, "class", "Class");
 	
 	private String value;
 	
@@ -50,16 +45,16 @@ public class ThriftType implements Cloneable {
 	/**
 	 * 
 	 */
-	public ThriftType() {
+	public FieldType() {
 		super();
 	}
 
 	/**
 	 * @param value
-	 * @param isCollection
+	 * @param type
 	 * @param javaTypeName
 	 */
-	private ThriftType(String value, int type, String javaTypeName) {
+	private FieldType(String value, int type, String javaTypeName) {
 		this.value = value;
 		this.type = type;
 		this.javaTypeName = javaTypeName;
@@ -67,12 +62,12 @@ public class ThriftType implements Cloneable {
 
 	/**
 	 * @param value
-	 * @param isCollection
+	 * @param type
 	 * @param javaTypeName
 	 * @param warpperClassName
 	 */
-	private ThriftType(String value, int type, String javaTypeName,
-			String warpperClassName) {
+	private FieldType(String value, int type, String javaTypeName,
+					  String warpperClassName) {
 		this.value = value;
 		this.type = type;
 		this.javaTypeName = javaTypeName;
@@ -80,15 +75,15 @@ public class ThriftType implements Cloneable {
 	}
 	
 	@Override
-	public ThriftType clone() {
+	public FieldType clone() {
 		try {
-			return (ThriftType) super.clone();
+			return (FieldType) super.clone();
 		} catch (CloneNotSupportedException e) {
 			throw new RuntimeException("clone object error!", e);
 		}
 	}
 	
-	public static ThriftType fromJavaType(Type type) {
+	public static FieldType fromJavaType(Type type) {
 		Class<?> clazz = null;
 		if(type instanceof ParameterizedType) {
 			clazz = (Class<?>) ((ParameterizedType) type).getRawType();
@@ -99,7 +94,7 @@ public class ThriftType implements Cloneable {
 	}
 	
 	
-	public static ThriftType fromJavaType(Class<?> clazz) {
+	public static FieldType fromJavaType(Class<?> clazz) {
 		if(clazz == short.class || clazz == Short.class) {
 			return I16;
 		}
@@ -134,9 +129,9 @@ public class ThriftType implements Cloneable {
 			return ENUM;
 		}
 		if(!clazz.getName().startsWith("java.lang")) {
-			ThriftType thriftType = STRUCT.clone();
-			thriftType.setValue(clazz.getSimpleName());
-			return thriftType;
+			FieldType fieldType = STRUCT.clone();
+			fieldType.setValue(clazz.getSimpleName());
+			return fieldType;
 		}
 		throw new RuntimeException("Unkonw type :" + clazz);
 	}

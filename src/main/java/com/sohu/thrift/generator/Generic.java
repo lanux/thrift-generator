@@ -10,56 +10,35 @@ import java.util.List;
 
 /**
  * 泛型描述类,是一个树形的结构,每个Generic都有可能有多个types
- * @author hongliuliao
- *
- * createTime:2012-11-28 上午9:45:20
  */
-public class Generic extends ThriftType {
+public class Generic extends FieldType {
 	
 	/**
-	 * 可能是ThriftType,也可能还是泛型
+	 * 可能是FieldType,也可能还是泛型
 	 */
-	private List<? super ThriftType> types = new ArrayList<ThriftType>();
+	private List<? super FieldType> types = new ArrayList<FieldType>();
 
 	/**
 	 * @return the types
 	 */
 	@SuppressWarnings("unchecked")
-	public List<ThriftType> getTypes() {
-		return (List<ThriftType>) types;
+	public List<FieldType> getTypes() {
+		return (List<FieldType>) types;
 	}
 
 	/**
 	 * @param types the types to set
 	 */
-	public void setTypes(List<ThriftType> types) {
+	public void setTypes(List<FieldType> types) {
 		this.types = types;
 	}
 	
-	public void addGeneric(ThriftType generic) {
+	public void addGeneric(FieldType generic) {
 		types.add(generic);
 	}
 	
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder("<");
-		for (Object type : types) {
-			if(type instanceof Generic) {
-				sb.append(type.toString());
-			}else {
-				ThriftType thriftType = (ThriftType) type;
-				if(thriftType.isStruct()) {
-					sb.append(thriftType.getValue());
-				}else {
-					sb.append(thriftType.getWarpperClassName());
-				}
-			}
-		}
-		sb.append(">");
-		return sb.toString();
-	}
-	
-	public String toThriftString() {
 		if(types == null || types.isEmpty()) {
 			return this.getValue();
 		}
@@ -68,12 +47,12 @@ public class Generic extends ThriftType {
 		sb.append("<");
 		for (int i = 0; i < types.size(); i++) {
 			Object type = types.get(i);
-			ThriftType thriftType = (ThriftType) type;
+			FieldType fieldType = (FieldType) type;
 			
 			if(type instanceof Generic) {
-				sb.append(((Generic) type).toThriftString());
+				sb.append(((Generic) type).toString());
 			}else {
-				sb.append(thriftType.getValue());
+				sb.append(fieldType.getValue());
 			}
 			
 			if(i != types.size() - 1) {
@@ -87,16 +66,16 @@ public class Generic extends ThriftType {
 	public static Generic fromType(Type type) {
 		Generic generic = new Generic();
 		if(!(type instanceof ParameterizedType)) {
-			ThriftType thriftType = ThriftType.fromJavaType(type);
-			generic.setJavaClass(thriftType.getJavaClass());
-			generic.setJavaTypeName(thriftType.getJavaTypeName());
-			generic.setValue(thriftType.getValue());
-			generic.setWarpperClassName(thriftType.getWarpperClassName());
-			generic.setType(thriftType.getType());
+			FieldType fieldType = FieldType.fromJavaType(type);
+			generic.setJavaClass(fieldType.getJavaClass());
+			generic.setJavaTypeName(fieldType.getJavaTypeName());
+			generic.setValue(fieldType.getValue());
+			generic.setWarpperClassName(fieldType.getWarpperClassName());
+			generic.setType(fieldType.getType());
 			return generic;
 		}
-		ThriftType thriftType = ThriftType.fromJavaType(type);
-		generic.setValue(thriftType.getValue());
+		FieldType fieldType = FieldType.fromJavaType(type);
+		generic.setValue(fieldType.getValue());
 		ParameterizedType parameterizedType = (ParameterizedType) type;
 		Type[] types = parameterizedType.getActualTypeArguments();
 		for (Type typeArgument : types) {
@@ -104,13 +83,13 @@ public class Generic extends ThriftType {
 				generic.addGeneric(fromType(typeArgument));
 				continue;
 			}
-			ThriftType typeArgumentThriftType = ThriftType.fromJavaType((Class<?>)typeArgument);
-			if(typeArgumentThriftType.isStruct() || typeArgumentThriftType.isEnum()) {
-				typeArgumentThriftType = typeArgumentThriftType.clone();
-				typeArgumentThriftType.setJavaClass((Class<?>)typeArgument);
-				typeArgumentThriftType.setValue(((Class<?>)typeArgument).getSimpleName());
+			FieldType typeArgumentFieldType = FieldType.fromJavaType((Class<?>)typeArgument);
+			if(typeArgumentFieldType.isStruct() || typeArgumentFieldType.isEnum()) {
+				typeArgumentFieldType = typeArgumentFieldType.clone();
+				typeArgumentFieldType.setJavaClass((Class<?>)typeArgument);
+				typeArgumentFieldType.setValue(((Class<?>)typeArgument).getSimpleName());
 			}
-			generic.addGeneric(typeArgumentThriftType);
+			generic.addGeneric(typeArgumentFieldType);
 		}
 		return generic;
 	}

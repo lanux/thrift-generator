@@ -25,12 +25,6 @@ import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaMethod;
 
-/**
- * It is CommontUtils?? May be call ReflectionUtils is better? :)
- * @author hongliuliao
- *
- * createTime:2012-9-11 上午10:54:48
- */
 public class CommonUtils {
 	private static final Log log = LogFactory.getLog(CommonUtils.class);
 	

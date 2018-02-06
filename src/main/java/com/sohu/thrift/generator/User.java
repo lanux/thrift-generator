@@ -1,16 +1,17 @@
 /**
  * 
  */
-package com.sohu.thrift.generator.test;
+package com.sohu.thrift.generator;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author hongliuliao
  *
  * createTime:2012-11-23 下午1:04:16
  */
-public class User {
+public class User extends BaseObject{
 	
 	private int id;
 	private String name;
@@ -22,6 +23,28 @@ public class User {
 	private List<Long> ids;
 	
 	private Account account;
+
+	private List<Account> children;
+
+	private Map<String,Account> map;
+
+
+	public List<Account> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Account> children) {
+		this.children = children;
+	}
+
+	public Map<String, Account> getMap() {
+		return map;
+	}
+
+	public void setMap(Map<String, Account> map) {
+		this.map = map;
+	}
+
 	/**
 	 * @return the id
 	 */

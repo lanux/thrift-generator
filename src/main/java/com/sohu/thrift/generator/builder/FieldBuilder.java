@@ -5,15 +5,15 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import com.sohu.thrift.generator.EnumEntity;
 import com.sohu.thrift.generator.Generic;
-import com.sohu.thrift.generator.ThriftEnum;
-import com.sohu.thrift.generator.ThriftField;
-import com.sohu.thrift.generator.ThriftStruct;
+import com.sohu.thrift.generator.FieldEntity;
+import com.sohu.thrift.generator.ClassEntity;
 
-public class ThriftFieldBuilder {
+public class FieldBuilder {
 	
-	public ThriftField buildThriftField(ThriftStructBuilder structBuilder, Field field, List<ThriftStruct> structs, List<ThriftEnum> enums) {
-		ThriftField thriftField = new ThriftField();
+	public FieldEntity buildThriftField(ClassBuilder structBuilder, Field field, List<ClassEntity> structs, List<EnumEntity> enums) {
+		FieldEntity thriftField = new FieldEntity();
 		thriftField.setName(field.getName());
 		if(field.getName().equals("__PARANAMER_DATA")) {
 			return null;

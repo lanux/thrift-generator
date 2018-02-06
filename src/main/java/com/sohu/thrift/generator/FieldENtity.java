@@ -3,20 +3,18 @@
  */
 package com.sohu.thrift.generator;
 
-import java.util.List;
 
 /**
  * @author hongliuliao
  *
- * createTime:2012-11-30 下午12:18:39
+ * createTime:2012-11-23 上午11:58:02
  */
-public class ThriftEnum {
-
+public class FieldEntity {
+	
+	private Generic genericType;
+	
 	private String name;
 	
-	private List<ThriftEnumField> fields;
-
-
 	/**
 	 * @return the name
 	 */
@@ -31,20 +29,21 @@ public class ThriftEnum {
 		this.name = name;
 	}
 
+
 	/**
-	 * @return the fields
+	 * @return the generic
 	 */
-	public List<ThriftEnumField> getFields() {
-		return fields;
+	public Generic getGenericType() {
+		return genericType;
 	}
 
 	/**
-	 * @param fields the fields to set
+	 * @param generic the generic to set
 	 */
-	public void setFields(List<ThriftEnumField> fields) {
-		this.fields = fields;
+	public void setGenericType(Generic generic) {
+		this.genericType = generic;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -61,7 +60,7 @@ public class ThriftEnum {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ThriftEnum other = (ThriftEnum) obj;
+		FieldEntity other = (FieldEntity) obj;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -69,8 +68,5 @@ public class ThriftEnum {
 			return false;
 		return true;
 	}
-
-
-	
 	
 }

@@ -5,16 +5,11 @@ package com.sohu.thrift.generator;
 
 import java.util.List;
 
-/**
- * @author hongliuliao
- *
- * createTime:2012-11-23 上午11:49:16
- */
-public class ThriftStruct {
+public class ClassEntity {
 	
 	private String name;
 	
-	private List<ThriftField> fields;
+	private List<FieldEntity> fields;
 	
 	private Class<?> peerClass;
 
@@ -43,14 +38,14 @@ public class ThriftStruct {
 	/**
 	 * @return the fields
 	 */
-	public List<ThriftField> getFields() {
+	public List<FieldEntity> getFields() {
 		return fields;
 	}
 
 	/**
 	 * @param fields the fields to set
 	 */
-	public void setFields(List<ThriftField> fields) {
+	public void setFields(List<FieldEntity> fields) {
 		this.fields = fields;
 	}
 
@@ -70,7 +65,7 @@ public class ThriftStruct {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ThriftStruct other = (ThriftStruct) obj;
+		ClassEntity other = (ClassEntity) obj;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -81,7 +76,7 @@ public class ThriftStruct {
 
 	@Override
 	public String toString() {
-		return "ThriftStruct [name=" + name + ", fields=" + fields + "]";
+		return "ClassEntity [name=" + name + ", fields=" + fields + "]";
 	}
 	
 	

@@ -8,3 +8,6 @@ tags
 *.jar
 *.war
 *.ear
+
+.idea
+*.iml

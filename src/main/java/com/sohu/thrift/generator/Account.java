@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sohu.thrift.generator.test;
+package com.sohu.thrift.generator;
 
 /**
  * @author hongliuliao
