@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sohu.thrift.generator;
+package com.lx.entity;
 
 /**
  * @author hongliuliao

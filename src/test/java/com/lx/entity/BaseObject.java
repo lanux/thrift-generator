@@ -1,4 +1,4 @@
-package com.sohu.thrift.generator;
+package com.lx.entity;
 
 /**
  * Created by lanux on 2018/2/6.

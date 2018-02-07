@@ -1,7 +1,4 @@
-/**
- *
- */
-package com.sohu.thrift.generator;
+package com.lx.generator;
 
 public class EnumField {
     private String name;

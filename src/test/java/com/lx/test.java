@@ -1,8 +1,9 @@
-package com.sohu.thrift.generator.builder;
+package com.lx;
 
-import com.sohu.thrift.generator.ClassEntity;
-import com.sohu.thrift.generator.EnumEntity;
-import com.sohu.thrift.generator.User;
+import com.lx.entity.User;
+import com.lx.generator.ClassEntity;
+import com.lx.generator.EnumEntity;
+import com.lx.generator.builder.ClassBuilder;
 
 import java.util.ArrayList;
 import java.util.List;

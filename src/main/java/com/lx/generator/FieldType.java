@@ -1,11 +1,9 @@
-/**
- * 
- */
-package com.sohu.thrift.generator;
+package com.lx.generator;
+
+import com.lx.generator.utils.CommonUtils;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,14 +15,8 @@ public class FieldType implements Cloneable {
 	public static final int STRUCT_TYPE = 1 << 2;
 	public static final int VOID_TYPE = 1 << 3;
 	public static final int ENUM_TYPE = 1 << 4;
-	
-	public static final FieldType BOOL = new FieldType("bool", BASIC_TYPE, "boolean", "Boolean");
-	public static final FieldType BYTE = new FieldType("byte", BASIC_TYPE, "byte", "Byte");
-	public static final FieldType I16 = new FieldType("i16", BASIC_TYPE, "short", "Short");
-	public static final FieldType I32 = new FieldType("i32", BASIC_TYPE, "int", "Integer");
-	public static final FieldType I64 = new FieldType("i64", BASIC_TYPE, "long", "Long");
-	public static final FieldType DOUBLE = new FieldType("double", BASIC_TYPE, "double", "Double");
-	public static final FieldType STRING = new FieldType("string", BASIC_TYPE, "String", "String");
+
+	public static final FieldType BASIC = new FieldType("basic", BASIC_TYPE, "boolean", "Boolean");
 	public static final FieldType LIST = new FieldType("list", COLLECTION_TYPE, "List");
 	public static final FieldType SET = new FieldType("set", COLLECTION_TYPE, "Set");
 	public static final FieldType MAP = new FieldType("map", COLLECTION_TYPE, "Map");
@@ -33,15 +25,14 @@ public class FieldType implements Cloneable {
 	public static final FieldType STRUCT = new FieldType("struct", STRUCT_TYPE, "class", "Class");
 	
 	private String value;
-	
 	private int type;
 	
 	private String javaTypeName;
 	
 	private Class<?> javaClass;
-	
+
 	private String warpperClassName;
-	
+
 	/**
 	 * 
 	 */
@@ -95,38 +86,21 @@ public class FieldType implements Cloneable {
 	
 	
 	public static FieldType fromJavaType(Class<?> clazz) {
-		if(clazz == short.class || clazz == Short.class) {
-			return I16;
-		}
-		if(clazz == int.class || clazz == Integer.class) {
-			return I32;
-		}
-		if(clazz == long.class || clazz == Long.class) {
-			return I64;
-		}
-		if(clazz == String.class) {
-			return STRING;
-		}
-		if(clazz == boolean.class || clazz == Boolean.class) {
-			return BOOL;
-		}
-		if (clazz == double.class || clazz == Double.class) {
-			return DOUBLE;
-		}
-		if(clazz == Date.class) {
-			return I64;
+		boolean basicType = CommonUtils.isBasicType(clazz);
+		if (basicType){
+			return BASIC.setValue(clazz.getSimpleName()).setJavaClass(clazz);
 		}
 		if(List.class.isAssignableFrom(clazz)) {
-			return LIST;
+			return LIST.setValue(clazz.getSimpleName()).setJavaClass(clazz);
 		}
 		if(Set.class.isAssignableFrom(clazz)) {
-			return SET;
+			return SET.setValue(clazz.getSimpleName()).setJavaClass(clazz);
 		}
 		if(Map.class.isAssignableFrom(clazz)) {
-			return MAP;
+			return MAP.setValue(clazz.getSimpleName()).setJavaClass(clazz);
 		}
 		if(clazz.isEnum()) {
-			return ENUM;
+			return ENUM.setValue(clazz.getSimpleName()).setJavaClass(clazz);
 		}
 		if(!clazz.getName().startsWith("java.lang")) {
 			FieldType fieldType = STRUCT.clone();
@@ -178,8 +152,9 @@ public class FieldType implements Cloneable {
 	/**
 	 * @param value the value to set
 	 */
-	public void setValue(String value) {
+	public FieldType setValue(String value) {
 		this.value = value;
+		return this;
 	}
 
 	/**
@@ -198,8 +173,9 @@ public class FieldType implements Cloneable {
 	/**
 	 * @param javaTypeName the javaTypeName to set
 	 */
-	public void setJavaTypeName(String javaTypeName) {
+	public FieldType setJavaTypeName(String javaTypeName) {
 		this.javaTypeName = javaTypeName;
+		return this;
 	}
 
 	/**
@@ -212,8 +188,9 @@ public class FieldType implements Cloneable {
 	/**
 	 * @param warpperClassName the warpperClassName to set
 	 */
-	public void setWarpperClassName(String warpperClassName) {
+	public FieldType setWarpperClassName(String warpperClassName) {
 		this.warpperClassName = warpperClassName;
+		return this;
 	}
 
 	/**
@@ -226,8 +203,9 @@ public class FieldType implements Cloneable {
 	/**
 	 * @param javaClass the javaClass to set
 	 */
-	public void setJavaClass(Class<?> javaClass) {
+	public FieldType setJavaClass(Class<?> javaClass) {
 		this.javaClass = javaClass;
+		return this;
 	}
 
 	/**
@@ -240,8 +218,9 @@ public class FieldType implements Cloneable {
 	/**
 	 * @param type the type to set
 	 */
-	public void setType(int type) {
+	public FieldType setType(int type) {
 		this.type = type;
+		return this;
 	}
 	
 	

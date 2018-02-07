@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sohu.thrift.generator;
+package com.lx.entity;
 
 import java.util.List;
 import java.util.Map;
@@ -11,17 +11,17 @@ import java.util.Map;
  *
  * createTime:2012-11-23 下午1:04:16
  */
-public class User extends BaseObject{
-	
+public class User extends BaseObject {
+
 	private int id;
 	private String name;
 	private boolean sex;
 	private Status status;
 	private double locX;
 	private double locY;
-	
+
 	private List<Long> ids;
-	
+
 	private Account account;
 
 	private List<Account> children;

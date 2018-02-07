@@ -1,20 +1,17 @@
 /**
  * 
  */
-package com.sohu.thrift.generator;
+package com.lx.generator;
 
+import java.util.List;
 
-/**
- * @author hongliuliao
- *
- * createTime:2012-11-23 上午11:58:02
- */
-public class FieldEntity {
-	
-	private Generic genericType;
-	
+public class EnumEntity {
+
 	private String name;
 	
+	private List<EnumField> fields;
+
+
 	/**
 	 * @return the name
 	 */
@@ -29,21 +26,20 @@ public class FieldEntity {
 		this.name = name;
 	}
 
-
 	/**
-	 * @return the generic
+	 * @return the fields
 	 */
-	public Generic getGenericType() {
-		return genericType;
+	public List<EnumField> getFields() {
+		return fields;
 	}
 
 	/**
-	 * @param generic the generic to set
+	 * @param fields the fields to set
 	 */
-	public void setGenericType(Generic generic) {
-		this.genericType = generic;
+	public void setFields(List<EnumField> fields) {
+		this.fields = fields;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -60,7 +56,7 @@ public class FieldEntity {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		FieldEntity other = (FieldEntity) obj;
+		EnumEntity other = (EnumEntity) obj;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -68,5 +64,8 @@ public class FieldEntity {
 			return false;
 		return true;
 	}
+
+
+	
 	
 }
